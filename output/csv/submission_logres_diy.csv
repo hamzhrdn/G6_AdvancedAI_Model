@@ -261,7 +261,7 @@ Student_ID,Target
 2599,Enrolled
 3018,Graduate
 2135,Graduate
-3524,Enrolled
+3524,Dropout
 348,Graduate
 863,Graduate
 3281,Graduate
@@ -386,7 +386,7 @@ Student_ID,Target
 3910,Dropout
 1384,Graduate
 4248,Graduate
-55,Enrolled
+55,Graduate
 3815,Graduate
 2857,Graduate
 2454,Graduate
@@ -819,7 +819,7 @@ Student_ID,Target
 3059,Graduate
 2374,Graduate
 2500,Dropout
-592,Enrolled
+592,Graduate
 1182,Graduate
 1171,Graduate
 3668,Dropout
@@ -1231,7 +1231,7 @@ Student_ID,Target
 550,Graduate
 3310,Dropout
 774,Graduate
-732,Enrolled
+732,Graduate
 3172,Dropout
 2910,Dropout
 1750,Dropout
