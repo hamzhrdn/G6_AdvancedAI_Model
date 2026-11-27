@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.base import BaseEstimator, ClassifierMixin
 
 class DecisionTree:
     def __init__(self, max_depth = None, min_samples_split = 0, max_features  = None):
@@ -419,8 +420,8 @@ class KNNClassifier():
 
         return Y_pred
 
-class LogisticRegression:
-    def __init__(self, learning_rate, num_iterations, l2):
+class LogisticRegression(ClassifierMixin, BaseEstimator):
+    def __init__(self, learning_rate=0.01, num_iterations=1000, l2=0.01):
         self.learning_rate = learning_rate
         self.num_iterations = num_iterations
         self.weights = None
@@ -437,6 +438,7 @@ class LogisticRegression:
         y = np.array(y).ravel()
 
         self._classes_, encoded_y = np.unique(y, return_inverse=True)
+        self.classes_ = self._classes_
         
         num_samples, num_features = X.shape
         num_classes = len(self._classes_)
@@ -453,10 +455,12 @@ class LogisticRegression:
             probabilities = self.softmax(scores)
 
             loss = -np.mean(np.sum(y_one_hot * np.log(probabilities + 1e-15), axis=1))
+            loss += 0.5*self.l2*np.sum(self.weights**2)
+
             self.loss_history.append(loss)
 
             error = probabilities - y_one_hot
-            gradient_weights = np.dot(X.T, error) / num_samples
+            gradient_weights = (np.dot(X.T, error) / num_samples + self.l2*self.weights)
             gradient_bias = np.sum(error, axis=0, keepdims=True) / num_samples
 
             self.weights -= self.learning_rate * gradient_weights
@@ -474,7 +478,6 @@ class LogisticRegression:
         if X.ndim != 2 or X.shape[1] != self.weights.shape[0]:
             raise ValueError(f"Expected {self.weights.shape[0]} features; got {X.shape}.")
         return self.softmax(X @ self.weights + self.bias)
-
 class Activations:
     @staticmethod
     def relu(Z):
